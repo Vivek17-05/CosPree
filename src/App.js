@@ -16,10 +16,18 @@ const App = () => {
   };
 
   return (
+    <>
+    <div className="company">
+        <img src="logo.png" alt="Company logo" />
+        <div className="name">
+          <h3>App Name</h3>
+          <p>Company name</p>
+        </div>
+    </div>
     <div className="Container">
-        <h1>Loom Player</h1>
         <Player />
     </div>
+    </>
   );
 };
 

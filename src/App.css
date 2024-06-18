@@ -4,3 +4,10 @@
     align-items: center;
     text-align: center;
 }
+.company{
+    display: flex;
+}
+.name{
+    display: flex;
+    flex-direction: column;
+}
