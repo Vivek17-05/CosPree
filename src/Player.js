@@ -24,6 +24,8 @@ const Player = () => {
       setShowWarning(true);
       setEmbedUrl(defUrl);
     }
+    if(inputUrl=="")
+      setShowWarning(false);
   };
 
   const handleWidthChange = (event) => {
