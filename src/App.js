@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Player from './Player';
+import logo from './logo.png';
 import './App.css';
 
 const App = () => {
@@ -18,7 +19,7 @@ const App = () => {
   return (
     <>
     <div className="company">
-        <img src="logo.png" alt="Company logo" />
+        <img src={logo} alt="Company logo" />
         <div className="name">
           <h3>App Name</h3>
           <p>Company name</p>
