@@ -11,8 +11,7 @@ const Player = () => {
   const [showWarning, setShowWarning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [check, setCheck] = useState(false);
-  // const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const iframeRef = useRef(null);
 
   useEffect(() => {
@@ -25,15 +24,10 @@ const Player = () => {
     const loomIdMatch = inputUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/);
     if (loomIdMatch && loomIdMatch[1]) {
       setEmbedUrl(`https://www.loom.com/embed/${loomIdMatch[1]}?autoplay=false`);
-      setSubmitted(true);
-      setCheck(true);
-      // setShow(false);
+      setShow(false);
     } else {
       setShowWarning(true);
       setEmbedUrl(defUrl);
-      if(!setCheck){
-      setSubmitted(false);
-      }
     }
     if (inputUrl === "") setShowWarning(false);
   };
@@ -63,15 +57,13 @@ const Player = () => {
   return (
     <div>
       {!submitted && (
-        isPaused && (
-        <div style={{ display: "flex", justifyContent:"flex-start" ,width:"620px" }}>
+        <div style={{ display: "flex", justifyContent: "flex-start", width: "600px" }}>
           <label>
             Video URL:
             <input
               type="text"
               value={url}
               onChange={handleUrlChange}
-              // style={{ margin: '0 10px' }}
             />
           </label>
           <label>
@@ -80,7 +72,7 @@ const Player = () => {
               type="number"
               value={width}
               onChange={handleWidthChange}
-              // style={{ margin: '0 10px' }}
+              style={{ marginLeft:"10px" }}
             />
           </label>
           <label>
@@ -89,11 +81,19 @@ const Player = () => {
               type="number"
               value={height}
               onChange={handleHeightChange}
-              // style={{ margin: '0 10px' }}
+              style={{ marginLeft:"10px" }}
             />
           </label>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => { setSubmitted(true); setShow(false); }}
+            style={{ height:"42px", marginTop:"36px", marginLeft:"80px", width:"100px"}}
+           >
+            Done
+          </button>
         </div>
-      ))}
+      )}
       {embedUrl && (
         <div>
           <iframe
@@ -107,21 +107,25 @@ const Player = () => {
           ></iframe>
         </div>
       )}
-      {/* {submitted && (
-        isPaused && (
-          <button type="button" class="btn btn-primary" onClick={()=>setShow(true)}>Edit</button>
-        )
-      )} */}
-      {submitted && (
-        isPaused && (
-        <div style={{ display: "flex", justifyContent:"space-between" ,width:"620px" }}>
+      {submitted && isPaused && !show && (
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => setShow(true)}
+          style={{ height:"42px", width:"100px"}}
+        >
+          Edit
+        </button>
+      )}
+      {show && (
+        <div style={{ display: "flex", justifyContent: "space-between", width: "620px" }}>
           <label>
             Video URL:
             <input
               type="text"
               value={url}
               onChange={handleUrlChange}
-              // style={{ margin: '0 10px' }}
+              style={{ marginLeft:"10px" }}
             />
           </label>
           <label>
@@ -130,7 +134,7 @@ const Player = () => {
               type="number"
               value={width}
               onChange={handleWidthChange}
-              // style={{ margin: '0 10px' }}
+              style={{ marginLeft:"10px" }}
             />
           </label>
           <label>
@@ -139,13 +143,21 @@ const Player = () => {
               type="number"
               value={height}
               onChange={handleHeightChange}
-              // style={{ margin: '0 10px' }}
+              style={{ marginLeft:"10px" }}
             />
           </label>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => setShow(false)}
+            style={{ height:"42px", marginTop:"36px", marginLeft:"80px", width:"100px"}}
+          >
+            Done
+          </button>
         </div>
-      ))}
+      )}
       {showWarning && (
-        <div className="alert alert-danger" role="alert" style={{ margin:"5px", width:"600px" }}>
+        <div className="alert alert-danger" role="alert" style={{ margin: "5px", width: "600px" }}>
           Invalid Loom URL. Please check the link and try again.
         </div>
       )}

@@ -18,15 +18,15 @@ const App = () => {
 
   return (
     <>
-    
-    <div className="Container">
     <div className="company">
-        <img src={logo} alt="Company logo" />
+        <img src={logo} alt="Company logo"/>
         <div className="name">
-          <h3>App Name</h3>
-          <p> by Company name</p>
+          <h3 style={{ marginBottom:"15px"}}>Loom Integration for monday.com</h3>
+          <p> by Satisfaction Drivers</p>
         </div>
     </div>
+    <div className="Container">
+    
         <Player />
     </div>
     <div className="details">

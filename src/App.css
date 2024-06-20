@@ -4,13 +4,15 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 .company{
     display: flex;
     align-items: center;
     margin-top: 10px;
-    margin-right: 410px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-300px);
 }
 .company img{
     width: 50px;
