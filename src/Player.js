@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const Player = () => {
-  const defaultUrl = 'https://www.loom.com/share/2a742981490b4c649ce429d75f70fd73?sid=b306873a-8b0f-4b4b-a859-51d6d73c4492';
+  const defaultUrl = 'https://www.loom.com/share/e00c8856f48049519ca6bece165b449a?sid=92f34792-4d9f-4946-96ed-1d20280abc4c';
   const id = defaultUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/)[1];
-  const defUrl = `https://www.loom.com/embed/${id}`;
+  const defUrl = `https://www.loom.com/embed/${id}?autoplay=false`;
   const [url, setUrl] = useState('');
   const [width, setWidth] = useState(600);
   const [height, setHeight] = useState(400);
   const [embedUrl, setEmbedUrl] = useState(defUrl);
   const [showWarning, setShowWarning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [check, setCheck] = useState(false);
+  // const [show, setShow] = useState(true);
   const iframeRef = useRef(null);
 
   useEffect(() => {
@@ -21,10 +24,16 @@ const Player = () => {
     setUrl(inputUrl);
     const loomIdMatch = inputUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/);
     if (loomIdMatch && loomIdMatch[1]) {
-      setEmbedUrl(`https://www.loom.com/embed/${loomIdMatch[1]}`);
+      setEmbedUrl(`https://www.loom.com/embed/${loomIdMatch[1]}?autoplay=false`);
+      setSubmitted(true);
+      setCheck(true);
+      // setShow(false);
     } else {
       setShowWarning(true);
       setEmbedUrl(defUrl);
+      if(!setCheck){
+      setSubmitted(false);
+      }
     }
     if (inputUrl === "") setShowWarning(false);
   };
@@ -53,6 +62,38 @@ const Player = () => {
 
   return (
     <div>
+      {!submitted && (
+        isPaused && (
+        <div style={{ display: "flex", justifyContent:"flex-start" ,width:"620px" }}>
+          <label>
+            Video URL:
+            <input
+              type="text"
+              value={url}
+              onChange={handleUrlChange}
+              // style={{ margin: '0 10px' }}
+            />
+          </label>
+          <label>
+            Width:
+            <input
+              type="number"
+              value={width}
+              onChange={handleWidthChange}
+              // style={{ margin: '0 10px' }}
+            />
+          </label>
+          <label>
+            Height:
+            <input
+              type="number"
+              value={height}
+              onChange={handleHeightChange}
+              // style={{ margin: '0 10px' }}
+            />
+          </label>
+        </div>
+      ))}
       {embedUrl && (
         <div>
           <iframe
@@ -63,19 +104,24 @@ const Player = () => {
             frameBorder="0"
             allowFullScreen
             title="Video Player"
-            style={{ marginTop: '20px' }}
           ></iframe>
         </div>
       )}
-      {isPaused && (
-        <div style={{ display: "flex", justifyContent: "center" }}>
+      {/* {submitted && (
+        isPaused && (
+          <button type="button" class="btn btn-primary" onClick={()=>setShow(true)}>Edit</button>
+        )
+      )} */}
+      {submitted && (
+        isPaused && (
+        <div style={{ display: "flex", justifyContent:"space-between" ,width:"620px" }}>
           <label>
             Video URL:
             <input
               type="text"
               value={url}
               onChange={handleUrlChange}
-              style={{ margin: '0 10px' }}
+              // style={{ margin: '0 10px' }}
             />
           </label>
           <label>
@@ -84,7 +130,7 @@ const Player = () => {
               type="number"
               value={width}
               onChange={handleWidthChange}
-              style={{ margin: '0 10px' }}
+              // style={{ margin: '0 10px' }}
             />
           </label>
           <label>
@@ -93,13 +139,13 @@ const Player = () => {
               type="number"
               value={height}
               onChange={handleHeightChange}
-              style={{ margin: '0 10px' }}
+              // style={{ margin: '0 10px' }}
             />
           </label>
         </div>
-      )}
+      ))}
       {showWarning && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert alert-danger" role="alert" style={{ margin:"5px", width:"600px" }}>
           Invalid Loom URL. Please check the link and try again.
         </div>
       )}
