@@ -19,10 +19,10 @@ const App = () => {
   return (
     <>
     <div className="company">
-        <img src={logo} alt="Company logo"/>
+        <img src={logo} alt="Company logo" style={{ height:"56px",width:"56px"}}/>
         <div className="name">
-          <h3 style={{ marginBottom:"15px"}}>Loom Integration for monday.com</h3>
-          <p> by Satisfaction Drivers</p>
+          <b><span style={{ height:"19px"}}>Loom Integration for monday.com</span></b>
+          <span style={{ height:"16px"}}> by Satisfaction Drivers</span>
         </div>
     </div>
     <div className="Container">
@@ -33,14 +33,14 @@ const App = () => {
       <div className="info">
         <div >
           <h4>Additional information</h4>
-          <p>Discover more resources on how to set up and use the app (incl. videos and troubleshooting guides).</p>
+          <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px"}}>Discover more resources on how to set up and use the app (incl. videos and troubleshooting guides).</p>
           <button type="button" class="btn btn-primary" style={{width:"130px"}}><a href="">Documentation</a></button>
           
         </div>
         <div>
           <h4>Get premium support</h4>
-          <p>Our support team is ready to help you out with any questions. Do not hesitate to contact us!</p>
-          <button type="button" class="btn btn-primary" style={{width:"130px"}}><a href="">Support</a></button>
+          <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px"}}>Our support team is ready to help you out with any questions. Do not hesitate to contact us!</p>
+          <button type="button" class="btn btn-primary" style={{width:"140px"}}><a href="">Support</a></button>
         </div>
       </div>
     </div>

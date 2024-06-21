@@ -1,3 +1,6 @@
+*{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;;
+}
 .Container{
     display: flex;
     flex-direction: column;
@@ -13,6 +16,7 @@
     position: relative;
     left: 50%;
     transform: translateX(-300px);
+    margin-bottom: -15px;
 }
 .company img{
     width: 50px;
@@ -49,4 +53,7 @@
 .details{
     display: flex;
     justify-content: center;
+}
+h4{
+    margin-bottom: 0px;
 }

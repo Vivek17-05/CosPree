@@ -9,14 +9,30 @@ const Player = () => {
   const [height, setHeight] = useState(400);
   const [embedUrl, setEmbedUrl] = useState(defUrl);
   const [showWarning, setShowWarning] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  // const [isPaused, setIsPaused] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [show, setShow] = useState(false);
   const iframeRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     setShowWarning(false);
   }, [embedUrl]);
+
+  useEffect(() => {
+    if (show || !submitted) {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+      timeoutRef.current = setTimeout(() => {
+        setShow(false);
+        setSubmitted(true);
+      }, 10000);
+    }
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [show, submitted]);
 
   const handleUrlChange = (event) => {
     const inputUrl = event.target.value;
@@ -42,23 +58,23 @@ const Player = () => {
     setHeight(value > 0 ? value : 400);
   };
 
-  useEffect(() => {
-    const checkFocus = setInterval(() => {
-      if (document.activeElement === iframeRef.current) {
-        setIsPaused(false);
-      } else {
-        setIsPaused(true);
-      }
-    }, 500);
+  // useEffect(() => {
+  //   const checkFocus = setInterval(() => {
+  //     if (document.activeElement === iframeRef.current) {
+  //       setIsPaused(false);
+  //     } else {
+  //       setIsPaused(true);
+  //     }
+  //   }, 500);
 
-    return () => clearInterval(checkFocus);
-  }, []);
+  //   return () => clearInterval(checkFocus);
+  // }, []);
 
   return (
     <div>
       {!submitted && (
-        <div style={{ display: "flex", justifyContent: "flex-start", width: "600px" }}>
-          <label>
+        <div style={{ display: "flex", justifyContent: "flex-start", width: "600px", marginTop: "20px" }}>
+          <label style={{color: "#212529" }}>
             Video URL:
             <input
               type="text"
@@ -66,7 +82,7 @@ const Player = () => {
               onChange={handleUrlChange}
             />
           </label>
-          <label>
+          <label style={{color: "#212529" }}>
             Width:
             <input
               type="number"
@@ -75,7 +91,7 @@ const Player = () => {
               style={{ marginLeft:"10px" }}
             />
           </label>
-          <label>
+          <label style={{color: "#212529" }}>
             Height:
             <input
               type="number"
@@ -104,10 +120,11 @@ const Player = () => {
             frameBorder="0"
             allowFullScreen
             title="Video Player"
+            style={{marginBottom:"10px"}}
           ></iframe>
         </div>
       )}
-      {submitted && isPaused && !show && (
+      {submitted && !show && (
         <button
           type="button"
           className="btn btn-primary"
@@ -119,7 +136,7 @@ const Player = () => {
       )}
       {show && (
         <div style={{ display: "flex", justifyContent: "space-between", width: "620px" }}>
-          <label>
+          <label style={{color: "#212529" }}>
             Video URL:
             <input
               type="text"
@@ -128,7 +145,7 @@ const Player = () => {
               style={{ marginLeft:"10px" }}
             />
           </label>
-          <label>
+          <label style={{color: "#212529" }}>
             Width:
             <input
               type="number"
@@ -137,7 +154,7 @@ const Player = () => {
               style={{ marginLeft:"10px" }}
             />
           </label>
-          <label>
+          <label style={{color: "#212529" }}>
             Height:
             <input
               type="number"
