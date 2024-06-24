@@ -25,7 +25,7 @@ const App = () => {
           <span style={{ height:"16px"}}> by Satisfaction Drivers</span>
         </div>
     </div>
-    <div className="Container">
+    <div className="Container" style={{marginTop: "15px"}}>
     
         <Player />
     </div>
