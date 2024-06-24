@@ -9,7 +9,6 @@ const Player = () => {
   const [height, setHeight] = useState(400);
   const [embedUrl, setEmbedUrl] = useState(defUrl);
   const [showWarning, setShowWarning] = useState(false);
-  // const [isPaused, setIsPaused] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [show, setShow] = useState(false);
   const iframeRef = useRef(null);
@@ -22,12 +21,13 @@ const Player = () => {
   const resetTimeout = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
-      setShow(false);
-      setSubmitted(true);
-    }, 10000); // 10 seconds
+      if (!showWarning) {
+        setShow(false);
+        setSubmitted(true);
+      }
+    }, 10000); // 10 second
   };
 
-  // Effect to set the timeout for 10 seconds of non-activity
   useEffect(() => {
     resetTimeout();
     const handleActivity = () => {
@@ -44,7 +44,7 @@ const Player = () => {
       window.removeEventListener('mousemove', handleActivity);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [show, submitted]);
+  }, [show, submitted, showWarning]);
 
   const handleUrlChange = (event) => {
     const inputUrl = event.target.value;
@@ -52,7 +52,8 @@ const Player = () => {
     const loomIdMatch = inputUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/);
     if (loomIdMatch && loomIdMatch[1]) {
       setEmbedUrl(`https://www.loom.com/embed/${loomIdMatch[1]}?autoplay=false`);
-      setShow(false);
+      // setShow(false);
+      setShowWarning(false);
     } else {
       setShowWarning(true);
       setEmbedUrl(defUrl);
@@ -70,23 +71,11 @@ const Player = () => {
     setHeight(value > 0 ? value : 400);
   };
 
-  // useEffect(() => {
-  //   const checkFocus = setInterval(() => {
-  //     if (document.activeElement === iframeRef.current) {
-  //       setIsPaused(false);
-  //     } else {
-  //       setIsPaused(true);
-  //     }
-  //   }, 500);
-
-  //   return () => clearInterval(checkFocus);
-  // }, []);
-
   return (
     <div>
       {!submitted && (
         <div style={{ display: "flex", justifyContent: "flex-start", width: "600px", marginTop: "20px" }}>
-          <label style={{color: "#212529" }}>
+          <label style={{ color: "#212529" }}>
             Video URL:
             <input
               type="text"
@@ -94,30 +83,30 @@ const Player = () => {
               onChange={handleUrlChange}
             />
           </label>
-          <label style={{color: "#212529" }}>
+          <label style={{ color: "#212529" }}>
             Width:
             <input
               type="number"
               value={width}
               onChange={handleWidthChange}
-              style={{ marginLeft:"10px" }}
+              style={{ marginLeft: "10px" }}
             />
           </label>
-          <label style={{color: "#212529" }}>
+          <label style={{ color: "#212529" }}>
             Height:
             <input
               type="number"
               value={height}
               onChange={handleHeightChange}
-              style={{ marginLeft:"10px" }}
+              style={{ marginLeft: "10px" }}
             />
           </label>
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => { if(!showWarning){ setSubmitted(true); setShow(false); }}}
-            style={{ height:"42px", marginTop:"36px", marginLeft:"80px", width:"100px"}}
-           >
+            onClick={() => { if (!showWarning) { setSubmitted(true); setShow(false); } }}
+            style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
+          >
             Done
           </button>
         </div>
@@ -132,7 +121,7 @@ const Player = () => {
             frameBorder="0"
             allowFullScreen
             title="Video Player"
-            style={{marginBottom:"10px"}}
+            style={{ marginBottom: "10px" }}
           ></iframe>
         </div>
       )}
@@ -141,45 +130,45 @@ const Player = () => {
           type="button"
           className="btn btn-primary"
           onClick={() => setShow(true)}
-          style={{ height:"42px", width:"100px"}}
+          style={{ height: "42px", width: "100px" }}
         >
           Edit
         </button>
       )}
       {show && (
         <div style={{ display: "flex", justifyContent: "space-between", width: "620px" }}>
-          <label style={{color: "#212529" }}>
+          <label style={{ color: "#212529" }}>
             Video URL:
             <input
               type="text"
               value={url}
               onChange={handleUrlChange}
-              style={{ marginLeft:"10px" }}
+              style={{ marginLeft: "10px" }}
             />
           </label>
-          <label style={{color: "#212529" }}>
+          <label style={{ color: "#212529" }}>
             Width:
             <input
               type="number"
               value={width}
               onChange={handleWidthChange}
-              style={{ marginLeft:"10px" }}
+              style={{ marginLeft: "10px" }}
             />
           </label>
-          <label style={{color: "#212529" }}>
+          <label style={{ color: "#212529" }}>
             Height:
             <input
               type="number"
               value={height}
               onChange={handleHeightChange}
-              style={{ marginLeft:"10px" }}
+              style={{ marginLeft: "10px" }}
             />
           </label>
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() =>{ if(!showWarning)setShow(false)}}
-            style={{ height:"42px", marginTop:"36px", marginLeft:"80px", width:"100px"}}
+            onClick={() => { if (!showWarning) setShow(false); }}
+            style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
           >
             Done
           </button>
