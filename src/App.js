@@ -34,7 +34,7 @@ const App = () => {
         <div >
           <h4>Additional information</h4>
           <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px"}}>Discover more resources on how to set up and use the app (incl. videos and troubleshooting guides).</p>
-          <button type="button" class="btn btn-primary" style={{width:"130px"}}><a href="">Documentation</a></button>
+          <button type="button" class="btn btn-primary" style={{width:"140px"}}><a href="">Documentation</a></button>
           
         </div>
         <div>

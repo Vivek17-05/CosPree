@@ -19,17 +19,29 @@ const Player = () => {
     setShowWarning(false);
   }, [embedUrl]);
 
-  useEffect(() => {
-    if (show || !submitted) {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  const resetTimeout = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setShow(false);
+      setSubmitted(true);
+    }, 10000); // 10 seconds
+  };
 
-      timeoutRef.current = setTimeout(() => {
-        setShow(false);
-        setSubmitted(true);
-      }, 10000);
-    }
+  // Effect to set the timeout for 10 seconds of non-activity
+  useEffect(() => {
+    resetTimeout();
+    const handleActivity = () => {
+      resetTimeout();
+    };
+
+    // Listen for keypresses and mouse movements to detect activity
+    window.addEventListener('keydown', handleActivity);
+    window.addEventListener('mousemove', handleActivity);
 
     return () => {
+      // Clean up event listeners on unmount
+      window.removeEventListener('keydown', handleActivity);
+      window.removeEventListener('mousemove', handleActivity);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [show, submitted]);
@@ -103,7 +115,7 @@ const Player = () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => { setSubmitted(true); setShow(false); }}
+            onClick={() => { if(!showWarning){ setSubmitted(true); setShow(false); }}}
             style={{ height:"42px", marginTop:"36px", marginLeft:"80px", width:"100px"}}
            >
             Done
@@ -166,7 +178,7 @@ const Player = () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => setShow(false)}
+            onClick={() =>{ if(!showWarning)setShow(false)}}
             style={{ height:"42px", marginTop:"36px", marginLeft:"80px", width:"100px"}}
           >
             Done
