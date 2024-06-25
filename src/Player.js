@@ -1,9 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
+import mondaySdk from 'monday-sdk-js';
 
 const Player = () => {
+  const monday = mondaySdk();
+  monday.setApiVersion("2023-10") ;
+  // monday.listen("settings", res=> {
+  //   console.log(res.data);
+  // }) ;
+  // const callback = res => console.log(res) ;
+  // monday.listen(['settings'],callback) ;
   const defaultUrl = 'https://www.loom.com/share/e00c8856f48049519ca6bece165b449a?sid=92f34792-4d9f-4946-96ed-1d20280abc4c';
   const id = defaultUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/)[1];
   const defUrl = `https://www.loom.com/embed/${id}?autoplay=false`;
+  const [urlSetting, setUrlSetting] = useState(false);
+  const [widthSetting, setWidthSetting] = useState(false);
+  const [heightSetting, setHeightSetting] = useState(false);
   const [url, setUrl] = useState('');
   const [width, setWidth] = useState(600);
   const [height, setHeight] = useState(400);
@@ -18,6 +29,37 @@ const Player = () => {
     setShowWarning(false);
   }, [embedUrl]);
 
+  useEffect(() => {
+    monday.listen("settings", res => {
+      console.log(res.data) ;
+      const settings = res.data ;
+      if(settings.url){
+        setUrl(settings.url) ;
+        setUrlSetting(true) ;
+        const inputUrl = settings.url ;
+        const loomIdMatch = inputUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/);
+        if (loomIdMatch && loomIdMatch[1]) {
+          setEmbedUrl(`https://www.loom.com/embed/${loomIdMatch[1]}?autoplay=false`);
+          // setShow(false);
+          setShowWarning(false);
+        } else {
+          setShowWarning(true);
+          setEmbedUrl(defUrl);
+        }
+        if (inputUrl === "") setShowWarning(false);
+      }
+      if(settings.width){
+        const value = parseInt(settings.width, 10);
+        setWidthSetting(true) ;
+        setWidth(value > 0 ? value : 600);
+      }
+      if(settings.height){
+        const value = parseInt(settings.height, 10);
+        setHeightSetting(true) ;
+        setHeight(value > 0 ? value : 400);
+      }
+    }) ;
+  }) ;
   const resetTimeout = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
@@ -49,6 +91,7 @@ const Player = () => {
   const handleUrlChange = (event) => {
     const inputUrl = event.target.value;
     setUrl(inputUrl);
+    setUrlSetting(false) ; 
     const loomIdMatch = inputUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/);
     if (loomIdMatch && loomIdMatch[1]) {
       setEmbedUrl(`https://www.loom.com/embed/${loomIdMatch[1]}?autoplay=false`);
@@ -63,11 +106,13 @@ const Player = () => {
 
   const handleWidthChange = (event) => {
     const value = parseInt(event.target.value, 10);
+    setWidthSetting(false) ;
     setWidth(value > 0 ? value : 600);
   };
 
   const handleHeightChange = (event) => {
     const value = parseInt(event.target.value, 10);
+    setHeightSetting(false) ;
     setHeight(value > 0 ? value : 400);
   };
 
@@ -79,7 +124,7 @@ const Player = () => {
             Video URL:
             <input
               type="text"
-              value={url}
+              value={urlSetting ? url :}
               onChange={handleUrlChange}
             />
           </label>
