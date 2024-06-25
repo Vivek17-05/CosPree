@@ -21,7 +21,7 @@ const Player = () => {
   const resetTimeout = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
-      if (!showWarning) {
+      if (!showWarning && url) {
         setShow(false);
         setSubmitted(true);
       }
@@ -104,7 +104,7 @@ const Player = () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => { if (!showWarning) { setSubmitted(true); setShow(false); } }}
+            onClick={() => { if (!showWarning && url) { setSubmitted(true); setShow(false); } }}
             style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
           >
             Done
@@ -167,7 +167,7 @@ const Player = () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => { if (!showWarning) setShow(false); }}
+            onClick={() => { if (!showWarning && url) setShow(false); }}
             style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
           >
             Done
