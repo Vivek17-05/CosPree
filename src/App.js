@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Player from './Player';
-import logo from './logo.png';
-import './App.css';
+// import logo from './logo.png';
+// import './App.css';
 
 const App = () => {
   const [url, setUrl] = useState('');
@@ -18,18 +18,18 @@ const App = () => {
 
   return (
     <>
-    <div className="company">
+    {/* <div className="company">
         <img src={logo} alt="Company logo" style={{ height:"56px",width:"56px"}}/>
         <div className="name">
           <b><span style={{ height:"19px"}}>Loom Integration for monday.com</span></b>
           <span style={{ height:"16px"}}> by Satisfaction Drivers</span>
         </div>
-    </div>
-    <div className="Container" style={{marginTop: "15px"}}>
+    </div> */}
+    <div className="Container">
     
         <Player />
     </div>
-    <div className="details">
+    {/* <div className="details">
       <div className="info">
         <div >
           <h4>Additional information</h4>
@@ -43,7 +43,7 @@ const App = () => {
           <button type="button" class="btn btn-primary" style={{width:"140px"}}><a href="">Support</a></button>
         </div>
       </div>
-    </div>
+    </div> */}
     </>
   );
 };
