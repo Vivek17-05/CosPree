@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logo from './logoApp.png';
 import './App.css';
-// import mondaySdk from 'monday-sdk-js';
+import mondaySdk from 'monday-sdk-js';
 
 const Player = () => {
-  // const monday = mondaySdk();
-  // monday.setApiVersion("2023-10") ;
+  const monday = mondaySdk();
+  monday.setApiVersion("2023-10") ;
   // monday.listen("settings", res=> {
   //   console.log(res.data);
   // }) ;
@@ -27,15 +27,28 @@ const Player = () => {
   const [showEdit, setShowEdit] = useState(false);
   const iframeRef = useRef(null);
   const timeoutRef = useRef(null);
+  const [storedurl, setStoredUrl] = useState("") ;
+  const [storedheight, setStoredHeight] = useState("") ;
+  const [storedwidth, setStoredWidth] = useState("") ;
+
 
   useEffect(() => {
     setShowWarning(false);
   }, [embedUrl]);
 
   useEffect(() => {
-    const storedurl = localStorage.getItem('url') ;
-    const storedheight = localStorage.getItem('height') ;
-    const storedwidth = localStorage.getItem('width') ;
+    monday.storage.instance.getItem('url').then(res=>{
+      console.log(res.data.value) ;
+      setStoredUrl(res.data.value) ;
+    }) ;
+    monday.storage.instance.getItem('height').then(res=>{
+      console.log(res.data.value) ;
+      setStoredHeight(res.data.value) ;
+    }) ;
+    monday.storage.instance.getItem('width').then(res=>{
+      console.log(res.data.value) ;
+      setStoredWidth(res.data.value) ;
+    }) ;
     if(storedurl){
       setUrl(storedurl) ;
       const loomIdMatch = storedurl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/);
@@ -117,7 +130,8 @@ const Player = () => {
   const handleUrlChange = (event) => {
     const inputUrl = event.target.value;
     setUrl(inputUrl);
-    localStorage.setItem('url', inputUrl) ;
+    monday.storage.instance.setItem("url", inputUrl) ;
+    // localStorage.setItem('url', inputUrl) ;
     // setUrlSetting(false) ; 
     const loomIdMatch = inputUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/);
     if (loomIdMatch && loomIdMatch[1]) {
@@ -135,14 +149,16 @@ const Player = () => {
     const value = parseInt(event.target.value, 10);
     // setWidthSetting(false) ;
     setWidth(value > 0 ? value : 600);
-    localStorage.setItem('width', value) ;
+    // localStorage.setItem('width', value) ;
+    monday.storage.instance.setItem("width", value) ;
   };
 
   const handleHeightChange = (event) => {
     const value = parseInt(event.target.value, 10);
     // setHeightSetting(false) ;
     setHeight(value > 0 ? value : 400);
-    localStorage.setItem('height', value) ;
+    // localStorage.setItem('height', value) ;
+    monday.storage.instance.setItem("height", value) ;
   };
 
   return (
