@@ -213,7 +213,10 @@ const Player = () => {
         </div>
       )} */}
       {embedUrl && (
-        <div >
+        <div 
+        onMouseEnter={()=>{if(submitted) setShowEdit(true)}}
+        onMouseLeave={()=>{if(submitted) setShowEdit(false)}}
+        style={{ position: 'relative', width: '100%', height: 'auto' }}>
           <iframe
             ref={iframeRef}
             src={embedUrl}
@@ -222,9 +225,30 @@ const Player = () => {
             frameBorder="0"
             allowFullScreen
             title="Video Player"
-            onMouseEnter={()=>{if(submitted) setShowEdit(true)}}
             style={{ marginBottom: "10px" }}
           ></iframe>
+          {submitted && !show && showEdit && (
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => setShow(true)}
+          style={{
+            height: "36px",
+            width: "100px",
+            position: 'absolute',
+            top: '24px',
+            right: '0',
+            zIndex: 10,
+            marginTop: '10px',
+            marginRight: '10px',
+            // backgroundColor: '#333333E6',
+            // color: '#F7F7F8',
+            // fontWeight: 'bold'
+          }}
+        >
+          Edit
+        </button>
+      )}
         </div>
       )}
       {!submitted && (
@@ -265,16 +289,7 @@ const Player = () => {
           </button>
         </div>
       )}
-      {submitted && !show && showEdit && (
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => setShow(true)}
-          style={{ height: "42px", width: "100px" }}
-        >
-          Edit
-        </button>
-      )}
+      
       {show && (
         <div style={{ display: "flex", justifyContent: "space-between", width: "620px" }}>
           <label style={{ color: "#212529" }}>
