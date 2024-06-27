@@ -24,6 +24,7 @@ const Player = () => {
   const [showWarning, setShowWarning] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [show, setShow] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const iframeRef = useRef(null);
   const timeoutRef = useRef(null);
 
@@ -157,7 +158,7 @@ const Player = () => {
       </div>)}
 
 
-      {!submitted && (
+      {/* {!submitted && (
         <div style={{ display: "flex", justifyContent: "flex-start", width: "600px", marginTop: "20px" }}>
           <label style={{ color: "#212529" }}>
             Video URL:
@@ -194,9 +195,9 @@ const Player = () => {
             Done
           </button>
         </div>
-      )}
+      )} */}
       {embedUrl && (
-        <div>
+        <div >
           <iframe
             ref={iframeRef}
             src={embedUrl}
@@ -205,11 +206,50 @@ const Player = () => {
             frameBorder="0"
             allowFullScreen
             title="Video Player"
+            onMouseEnter={()=>{if(submitted) setShowEdit(true)}}
             style={{ marginBottom: "10px" }}
           ></iframe>
         </div>
       )}
-      {submitted && !show && (
+      {!submitted && (
+        <div style={{ display: "flex", justifyContent: "space-between", width: "620px" }}>
+          <label style={{ color: "#212529" }}>
+            Video URL:
+            <input
+              type="text"
+              value={url}
+              onChange={handleUrlChange}
+            />
+          </label>
+          <label style={{ color: "#212529" }}>
+            Width:
+            <input
+              type="number"
+              value={width}
+              onChange={handleWidthChange}
+              style={{ marginLeft: "10px" }}
+            />
+          </label>
+          <label style={{ color: "#212529" }}>
+            Height:
+            <input
+              type="number"
+              value={height}
+              onChange={handleHeightChange}
+              style={{ marginLeft: "10px" }}
+            />
+          </label>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => { if (!showWarning && url) { setSubmitted(true); setShow(false); setShowEdit(false); } }}
+            style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
+          >
+            Done
+          </button>
+        </div>
+      )}
+      {submitted && !show && showEdit && (
         <button
           type="button"
           className="btn btn-primary"
@@ -251,7 +291,7 @@ const Player = () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => { if (!showWarning && url) setShow(false); }}
+            onClick={() => { if (!showWarning && url) setShow(false); setShowEdit(false)}}
             style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
           >
             Done
@@ -269,13 +309,13 @@ const Player = () => {
           <div >
             <h4 style={{textAlign:"left"}}>Additional information</h4>
             <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px", textAlign:"left"}}>Discover more resources on how to set up and use the app (incl. videos and troubleshooting guides).</p>
-            <button type="button" class="btn btn-primary" style={{width:"140px"}}><a href="">Documentation</a></button>
+            <button type="button" class="btn btn-primary" style={{width:"140px",marginTop:"20px"}}><a href="">Documentation</a></button>
             
           </div>
           <div>
             <h4 style={{textAlign:"left"}}>Get premium support</h4>
             <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px", textAlign:"left"}}>Our support team is ready to help you out with any questions. Do not hesitate to contact us!</p>
-            <button type="button" class="btn btn-primary" style={{width:"140px"}}><a href="">Support</a></button>
+            <button type="button" class="btn btn-primary" style={{width:"140px",marginTop:"20px"}}><a href="">Support</a></button>
           </div>
         </div>
       </div>)}
