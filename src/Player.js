@@ -37,20 +37,25 @@ const Player = () => {
   }, [embedUrl]);
 
   useEffect(() => {
-    monday.storage.instance.getItem('url').then(res=>{
-      console.log(res.data.value) ;
-      setStoredUrl(res.data.value) ;
-    }) ;
-    monday.storage.instance.getItem('height').then(res=>{
-      console.log(res.data.value) ;
-      setStoredHeight(res.data.value) ;
-    }) ;
-    monday.storage.instance.getItem('width').then(res=>{
-      console.log(res.data.value) ;
-      setStoredWidth(res.data.value) ;
-    }) ;
-    if(storedurl){
-      setUrl(storedurl) ;
+    monday.storage.instance.getItem('url').then(res => {
+      console.log(res.data.value);
+      setStoredUrl(res.data.value);
+    });
+  
+    monday.storage.instance.getItem('height').then(res => {
+      console.log(res.data.value);
+      setStoredHeight(res.data.value);
+    });
+  
+    monday.storage.instance.getItem('width').then(res => {
+      console.log(res.data.value);
+      setStoredWidth(res.data.value);
+    });
+  }, []);
+  
+  useEffect(() => {
+    if (storedurl) {
+      setUrl(storedurl);
       const loomIdMatch = storedurl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/);
       if (loomIdMatch && loomIdMatch[1]) {
         setEmbedUrl(`https://www.loom.com/embed/${loomIdMatch[1]}?autoplay=false`);
@@ -60,13 +65,20 @@ const Player = () => {
         setEmbedUrl(defUrl);
       }
     }
-    if(storedheight){
-      setHeight(parseInt(storedheight, 10)) ;
+  }, [storedurl]);
+  
+  useEffect(() => {
+    if (storedheight) {
+      setHeight(parseInt(storedheight, 10));
     }
-    if(storedwidth){
-      setWidth(parseInt(storedwidth, 10)) ;
+  }, [storedheight]);
+  
+  useEffect(() => {
+    if (storedwidth) {
+      setWidth(parseInt(storedwidth, 10));
     }
-  }) ;
+  }, [storedwidth]);
+  
 
   // useEffect(() => {
   //   monday.listen("settings", res => {
