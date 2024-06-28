@@ -38,16 +38,16 @@ const Player = () => {
 
   useEffect(() => {
     monday.storage.instance.getItem('url').then(res=>{
-      console.log(res.data.value) ;
-      setStoredUrl(res.data.value) ;
+      // console.log(res.data.value) ;
+      // setStoredUrl(res.data.value) ;
     }) ;
     monday.storage.instance.getItem('height').then(res=>{
-      console.log(res.data.value) ;
-      setStoredHeight(res.data.value) ;
+      // console.log(res.data.value) ;
+      // setStoredHeight(res.data.value) ;
     }) ;
     monday.storage.instance.getItem('width').then(res=>{
-      console.log(res.data.value) ;
-      setStoredWidth(res.data.value) ;
+      // console.log(res.data.value) ;
+      // setStoredWidth(res.data.value) ;
     }) ;
     if(storedurl){
       setUrl(storedurl) ;
@@ -165,7 +165,7 @@ const Player = () => {
     <div>
 
 
-      {!submitted && (<div className="company" style={{marginBottom:"15px"}}>
+      {!submitted && (<div className="company">
         <img src={logo} alt="Company logo" style={{ height:"50px",width:"50px"}}/>
         <div className="name" >
           <b><span style={{ height:"19px"}}>Loom Integration for monday.com</span></b>
@@ -228,31 +228,43 @@ const Player = () => {
             style={{ marginBottom: "10px" }}
           ></iframe>
           {submitted && !show && showEdit && (
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={() => setShow(true)}
-          style={{
-            height: "36px",
-            width: "100px",
+        // <button
+        //   type="button"
+        //   className="btn btn-primary"
+          // onClick={() => setShow(true)}
+          // style={{
+          //   height: "36px",
+          //   width: "100px",
+          //   position: 'absolute',
+          //   top: '24px',
+          //   right: '0',
+          //   zIndex: 10,
+          //   marginTop: '10px',
+          //   marginRight: '10px',
+          //   backgroundColor: '#333333E6',
+          //   color: '#F7F7F8',
+          //   fontWeight: 'bold'
+        //   }}
+        // >
+        //   Edit
+        // </button>
+        <i class="fa-solid fa-pen-to-square fa-xl" onClick={() => setShow(true)} style={{
+            // width: "32px",
+            // height: "32px",
             position: 'absolute',
-            top: '24px',
+            top: '50px',
             right: '0',
             zIndex: 10,
-            marginTop: '10px',
-            marginRight: '10px',
-            // backgroundColor: '#333333E6',
-            // color: '#F7F7F8',
-            // fontWeight: 'bold'
-          }}
-        >
-          Edit
-        </button>
+            // marginTop: '20px',
+            marginRight: '10px',backgroundColor: '#333333E6',
+            borderRadius:"50%",
+            color: '#F7F7F8',
+            }}></i>
       )}
         </div>
       )}
       {!submitted && (
-        <div style={{ display: "flex", justifyContent: "space-between", width: "620px" }}>
+        <div style={{ display: "flex", justifyContent: "center", width: "600px", position:"sticky",left: "29%" }}>
           <label style={{ color: "#212529" }}>
             Video URL:
             <input
@@ -290,44 +302,44 @@ const Player = () => {
         </div>
       )}
       
-      {show && (
-        <div style={{ display: "flex", justifyContent: "space-between", width: "620px" }}>
-          <label style={{ color: "#212529" }}>
-            Video URL:
-            <input
-              type="text"
-              value={url}
-              onChange={handleUrlChange}
-              style={{ marginLeft: "10px" }}
-            />
-          </label>
-          <label style={{ color: "#212529" }}>
-            Width:
-            <input
-              type="number"
-              value={width}
-              onChange={handleWidthChange}
-              style={{ marginLeft: "10px" }}
-            />
-          </label>
-          <label style={{ color: "#212529" }}>
-            Height:
-            <input
-              type="number"
-              value={height}
-              onChange={handleHeightChange}
-              style={{ marginLeft: "10px" }}
-            />
-          </label>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => { if (!showWarning && url) setShow(false); setShowEdit(false)}}
-            style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
-          >
-            Done
-          </button>
-        </div>
+      {show && ( 
+        <div style={{ display: "flex", justifyContent: "center", width: "600px", position:"sticky",left: "29%" }}>
+            <label style={{ color: "#212529" }}>
+              Video URL:
+              <input
+                type="text"
+                value={url}
+                onChange={handleUrlChange}
+                style={{ marginLeft: "10px" }}
+              />
+            </label>
+            <label style={{ color: "#212529" }}>
+              Width:
+              <input
+                type="number"
+                value={width}
+                onChange={handleWidthChange}
+                style={{ marginLeft: "10px" }}
+              />
+            </label>
+            <label style={{ color: "#212529" }}>
+              Height:
+              <input
+                type="number"
+                value={height}
+                onChange={handleHeightChange}
+                style={{ marginLeft: "10px" }}
+              />
+            </label>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => { if (!showWarning && url) setShow(false); setShowEdit(false)}}
+              style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
+            >
+              Done
+            </button>
+          </div>
       )}
       {showWarning && (
         <div className="alert alert-danger" role="alert" style={{ margin: "5px", width: "600px" }}>
@@ -338,15 +350,15 @@ const Player = () => {
       {!submitted && (<div className="details">
         <div className="info">
           <div >
-            <h4 style={{textAlign:"left"}}>Additional information</h4>
-            <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px", textAlign:"left"}}>Discover more resources on how to set up and use the app (incl. videos and troubleshooting guides).</p>
-            <button type="button" class="btn btn-primary" style={{width:"140px",marginTop:"20px"}}><a href="">Documentation</a></button>
+            <h4 style={{textAlign:"left", height:"56px"}}>Additional information</h4>
+            <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px", textAlign:"left"}}>Explore additional resources to learn how to set up and utilize app.</p>
+            <button type="button" class="btn btn-primary" style={{width:"140px",marginTop:"10px"}}><a href="">Documentation</a></button>
             
           </div>
           <div>
-            <h4 style={{textAlign:"left"}}>Get premium support</h4>
-            <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px", textAlign:"left"}}>Our support team is ready to help you out with any questions. Do not hesitate to contact us!</p>
-            <button type="button" class="btn btn-primary" style={{width:"140px",marginTop:"20px"}}><a href="">Support</a></button>
+            <h4 style={{textAlign:"left", height:"56px"}}>Receive premium support</h4>
+            <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px", textAlign:"left"}}>Our dedicated team is available to assist you with any questions or concerns. Feel free to reach out!</p>
+            <button type="button" class="btn btn-primary" style={{width:"140px",marginTop:"10px",textAlign:"center"}}><a href="">Support</a></button>
           </div>
         </div>
       </div>)}
