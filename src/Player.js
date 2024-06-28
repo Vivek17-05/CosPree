@@ -38,16 +38,16 @@ const Player = () => {
 
   useEffect(() => {
     monday.storage.instance.getItem('url').then(res=>{
-      // console.log(res.data.value) ;
-      // setStoredUrl(res.data.value) ;
+      console.log(res.data.value) ;
+      setStoredUrl(res.data.value) ;
     }) ;
     monday.storage.instance.getItem('height').then(res=>{
-      // console.log(res.data.value) ;
-      // setStoredHeight(res.data.value) ;
+      console.log(res.data.value) ;
+      setStoredHeight(res.data.value) ;
     }) ;
     monday.storage.instance.getItem('width').then(res=>{
-      // console.log(res.data.value) ;
-      // setStoredWidth(res.data.value) ;
+      console.log(res.data.value) ;
+      setStoredWidth(res.data.value) ;
     }) ;
     if(storedurl){
       setUrl(storedurl) ;
