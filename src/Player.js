@@ -40,33 +40,33 @@ const Player = () => {
 
   useEffect(() => {
     monday.storage.instance.getItem('url').then(res => {
-      console.log(res.data.value);
-      setStoredUrl(res.data.value);
+      // console.log(res.data.value);
+      // setStoredUrl(res.data.value);
     });
   
     monday.storage.instance.getItem('height').then(res => {
-      console.log(res.data.value);
-      setStoredHeight(res.data.value);
+      // console.log(res.data.value);
+      // setStoredHeight(res.data.value);
     });
   
     monday.storage.instance.getItem('width').then(res => {
-      console.log(res.data.value);
-      setStoredWidth(res.data.value);
+      // console.log(res.data.value);
+      // setStoredWidth(res.data.value);
     });
 
     monday.storage.instance.getItem('show').then(res => {
-      console.log(res.data.value);
-      setStoredShow(res.data.value);
+      // console.log(res.data.value);
+      // setStoredShow(res.data.value);
     });
 
     monday.storage.instance.getItem('submitted').then(res => {  
-      console.log(res.data.value);
-      setStoredSubmitted(res.data.value);
+      // console.log(res.data.value);
+      // setStoredSubmitted(res.data.value);
     });
 
     monday.storage.instance.getItem('showEdit').then(res => {
-      console.log(res.data.value);
-      setStoredShowEdit(res.data.value);
+      // console.log(res.data.value);
+      // setStoredShowEdit(res.data.value);
     });
   }, []);
   
@@ -324,15 +324,18 @@ const Player = () => {
           setShow(true) ;
           monday.storage.instance.setItem("show",show) ;
         }} style={{
-            // width: "32px",
-            // height: "32px",
+            width: "40px",
+            height: "40px",
             position: 'absolute',
-            top: '50px',
+            bottom: '75px',
             right: '0',
             zIndex: 10,
             // marginTop: '20px',
-            marginRight: '10px',backgroundColor: '#333333E6',
-            borderRadius:"50%",
+            paddingTop:'18px',
+            paddingLeft:'4px',
+            marginRight: '10px',
+            backgroundColor: '#333333E6',
+            borderRadius:"40px",
             color: '#F7F7F8',
             }}></i>
       )}
