@@ -30,7 +30,9 @@ const Player = () => {
   const [storedurl, setStoredUrl] = useState("") ;
   const [storedheight, setStoredHeight] = useState("") ;
   const [storedwidth, setStoredWidth] = useState("") ;
-
+  const [storedshow, setStoredShow] = useState("") ;
+  const [storedsubmitted, setStoredSubmitted] = useState("") ;
+  const [storedshowEdit, setStoredShowEdit] = useState("") ;
 
   useEffect(() => {
     setShowWarning(false);
@@ -50,6 +52,21 @@ const Player = () => {
     monday.storage.instance.getItem('width').then(res => {
       console.log(res.data.value);
       setStoredWidth(res.data.value);
+    });
+
+    monday.storage.instance.getItem('show').then(res => {
+      console.log(res.data.value);
+      setStoredShow(res.data.value);
+    });
+
+    monday.storage.instance.getItem('submitted').then(res => {  
+      console.log(res.data.value);
+      setStoredSubmitted(res.data.value);
+    });
+
+    monday.storage.instance.getItem('showEdit').then(res => {
+      console.log(res.data.value);
+      setStoredShowEdit(res.data.value);
     });
   }, []);
   
@@ -78,6 +95,25 @@ const Player = () => {
       setWidth(parseInt(storedwidth, 10));
     }
   }, [storedwidth]);
+  
+  useEffect(() => {
+    if (storedshow) {
+      setShow(storedshow);
+    }
+  }, [storedshow]);
+
+  useEffect(() => {
+    if (storedsubmitted) {
+      setSubmitted(storedsubmitted);
+    }
+  }
+  , [storedsubmitted]);
+
+  useEffect(() => {
+    if (storedshowEdit) {
+      setShowEdit(storedshowEdit);
+    }
+  }, [storedshowEdit]);
   
 
   // useEffect(() => {
@@ -116,7 +152,9 @@ const Player = () => {
     timeoutRef.current = setTimeout(() => {
       if (!showWarning && url) {
         setShow(false);
+        monday.storage.instance.setItem("show",show) ;
         setSubmitted(true);
+        monday.storage.instance.setItem("submitted",submitted) ;
       }
     }, 10000); // 10 second
   };
@@ -226,8 +264,16 @@ const Player = () => {
       )} */}
       {embedUrl && (
         <div 
-        onMouseEnter={()=>{if(submitted) setShowEdit(true)}}
-        onMouseLeave={()=>{if(submitted) setShowEdit(false)}}
+          onMouseEnter={()=>{
+            if(submitted){ 
+              setShowEdit(true) ;
+              monday.storage.instance.setItem("showEdit",showEdit) ;
+            }}}
+          onMouseLeave={()=>{
+            if(submitted){ 
+              setShowEdit(false) ;
+              monday.storage.instance.setItem("showEdit",showEdit) ;
+            }}}
         style={{ position: 'relative', width: '100%', height: 'auto' }}>
           <iframe
             ref={iframeRef}
@@ -260,7 +306,10 @@ const Player = () => {
         // >
         //   Edit
         // </button>
-        <i class="fa-solid fa-pen-to-square fa-xl" onClick={() => setShow(true)} style={{
+        <i class="fa-solid fa-pen-to-square fa-xl" onClick={() => {
+          setShow(true) ;
+          monday.storage.instance.setItem("show",show) ;
+        }} style={{
             // width: "32px",
             // height: "32px",
             position: 'absolute',
@@ -306,7 +355,7 @@ const Player = () => {
           <button
             type="button"
             className="btn btn-primary"
-            onClick={() => { if (!showWarning && url) { setSubmitted(true); setShow(false); setShowEdit(false); } }}
+            onClick={() => { if (!showWarning && url) { setSubmitted(true); setShow(false); setShowEdit(false); monday.storage.instance.setItem("show",show); monday.storage.instance.setItem("submitted",submitted); monday.storage.instance.setItem("showEdit",showEdit); } }}
             style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
           >
             Done
@@ -346,7 +395,7 @@ const Player = () => {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => { if (!showWarning && url) setShow(false); setShowEdit(false)}}
+              onClick={() => { if (!showWarning && url) setShow(false); setShowEdit(false); monday.storage.instance.setItem("show",show); monday.storage.instance.setItem("showEdit",showEdit);}}
               style={{ height: "42px", marginTop: "36px", marginLeft: "80px", width: "100px" }}
             >
               Done
