@@ -27,7 +27,7 @@ const Player = () => {
   const [showEdit, setShowEdit] = useState(false);
   const iframeRef = useRef(null);
   const timeoutRef = useRef(null);
-  const [storedurl, setStoredUrl] = useState("") ;
+  const [storedurl, setStoredUrl] = useState(defUrl) ;
   const [storedheight, setStoredHeight] = useState("") ;
   const [storedwidth, setStoredWidth] = useState("") ;
   const [storedshow, setStoredShow] = useState("") ;
@@ -82,6 +82,17 @@ const Player = () => {
         setEmbedUrl(defUrl);
       }
     }
+    else{
+      setUrl(defaultUrl);
+      const loomIdMatch = defaultUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/);
+      if (loomIdMatch && loomIdMatch[1]) {
+        setEmbedUrl(`https://www.loom.com/embed/${loomIdMatch[1]}?autoplay=false`);
+        setShowWarning(false);
+      } else {
+        setShowWarning(true);
+        setEmbedUrl(defUrl);
+      }
+    }
   }, [storedurl]);
   
   useEffect(() => {
@@ -114,7 +125,7 @@ const Player = () => {
       setShowEdit(storedshowEdit);
     }
   }, [storedshowEdit]);
-  
+
 
   // useEffect(() => {
   //   monday.listen("settings", res => {
@@ -192,7 +203,10 @@ const Player = () => {
       setShowWarning(true);
       setEmbedUrl(defUrl);
     }
-    if (inputUrl === "") setShowWarning(false);
+    if (inputUrl === ""){
+      setShowWarning(false);
+      monday.storage.instance.setItem("url",defUrl) ;
+    }
   };
 
   const handleWidthChange = (event) => {
