@@ -40,33 +40,33 @@ const Player = () => {
 
   useEffect(() => {
     monday.storage.instance.getItem('url').then(res => {
-      // console.log(res.data.value);
-      // setStoredUrl(res.data.value);
+      console.log(res.data.value);
+      setStoredUrl(res.data.value);
     });
   
     monday.storage.instance.getItem('height').then(res => {
-      // console.log(res.data.value);
-      // setStoredHeight(res.data.value);
+      console.log(res.data.value);
+      setStoredHeight(res.data.value);
     });
   
     monday.storage.instance.getItem('width').then(res => {
-      // console.log(res.data.value);
-      // setStoredWidth(res.data.value);
+      console.log(res.data.value);
+      setStoredWidth(res.data.value);
     });
 
     monday.storage.instance.getItem('show').then(res => {
-      // console.log(res.data.value);
-      // setStoredShow(res.data.value);
+      console.log(res.data.value);
+      setStoredShow(res.data.value);
     });
 
     monday.storage.instance.getItem('submitted').then(res => {  
-      // console.log(res.data.value);
-      // setStoredSubmitted(res.data.value);
+      console.log(res.data.value);
+      setStoredSubmitted(res.data.value);
     });
 
     monday.storage.instance.getItem('showEdit').then(res => {
-      // console.log(res.data.value);
-      // setStoredShowEdit(res.data.value);
+      console.log(res.data.value);
+      setStoredShowEdit(res.data.value);
     });
   }, []);
   
@@ -212,7 +212,8 @@ const Player = () => {
   const handleWidthChange = (event) => {
     const value = parseInt(event.target.value, 10);
     // setWidthSetting(false) ;
-    setWidth(value > 0 ? value : 600);
+    // setWidth(value > 0 ? value : 600);
+    setWidth(value) ;
     // localStorage.setItem('width', value) ;
     monday.storage.instance.setItem("width", value) ;
   };
@@ -220,7 +221,8 @@ const Player = () => {
   const handleHeightChange = (event) => {
     const value = parseInt(event.target.value, 10);
     // setHeightSetting(false) ;
-    setHeight(value > 0 ? value : 400);
+    // setHeight(value > 0 ? value : 400);
+    setHeight(value) ;
     // localStorage.setItem('height', value) ;
     monday.storage.instance.setItem("height", value) ;
   };
@@ -292,8 +294,8 @@ const Player = () => {
           <iframe
             ref={iframeRef}
             src={embedUrl}
-            width={width}
-            height={height}
+            width={width>0 ? width : 600}
+            height={height>0 ? height : 400}
             frameBorder="0"
             allowFullScreen
             title="Video Player"
