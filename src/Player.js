@@ -40,33 +40,33 @@ const Player = () => {
 
   useEffect(() => {
     monday.storage.instance.getItem('url').then(res => {
-      console.log(res.data.value);
-      setStoredUrl(res.data.value);
+      // console.log(res.data.value);
+      // setStoredUrl(res.data.value);
     });
   
     monday.storage.instance.getItem('height').then(res => {
-      console.log(res.data.value);
-      setStoredHeight(res.data.value);
+      // console.log(res.data.value);
+      // setStoredHeight(res.data.value);
     });
   
     monday.storage.instance.getItem('width').then(res => {
-      console.log(res.data.value);
-      setStoredWidth(res.data.value);
+      // console.log(res.data.value);
+      // setStoredWidth(res.data.value);
     });
 
     monday.storage.instance.getItem('show').then(res => {
-      console.log(res.data.value);
-      setStoredShow(res.data.value);
+      // console.log(res.data.value);
+      // setStoredShow(res.data.value);
     });
 
     monday.storage.instance.getItem('submitted').then(res => {  
-      console.log(res.data.value);
-      setStoredSubmitted(res.data.value);
+      // console.log(res.data.value);
+      // setStoredSubmitted(res.data.value);
     });
 
     monday.storage.instance.getItem('showEdit').then(res => {
-      console.log(res.data.value);
-      setStoredShowEdit(res.data.value);
+      // console.log(res.data.value);
+      // setStoredShowEdit(res.data.value);
     });
   }, []);
   
@@ -430,15 +430,15 @@ const Player = () => {
       {!submitted && (<div className="details">
         <div className="info">
           <div >
-            <h4 style={{textAlign:"left", height:"56px"}}>Additional information</h4>
+            <h3 style={{textAlign:"left", height:"56px"}}>Additional information</h3>
             <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px", textAlign:"left"}}>Explore additional resources to learn how to set up and utilize app.</p>
-            <button type="button" class="btn btn-primary" style={{width:"140px",marginTop:"10px"}}><a href="">Documentation</a></button>
+            <button type="button" class="btn btn-primary" style={{width:"140px",marginTop:"10px"}}><a href="https://satisfactiondrivers.com/loom-integration-for-monday-documentation" target='_blank'>Documentation</a></button>
             
           </div>
           <div>
-            <h4 style={{textAlign:"left", height:"56px"}}>Receive premium support</h4>
+            <h3 style={{textAlign:"left", height:"56px"}}>Receive premium support</h3>
             <p style={{ height:"60px", marginBottom:"16px", marginTop:"16px", textAlign:"left"}}>Our dedicated team is available to assist you with any questions or concerns. Feel free to reach out!</p>
-            <button type="button" class="btn btn-primary" style={{width:"140px",marginTop:"10px",textAlign:"center"}}><a href="">Support</a></button>
+            <button type="button" class="btn btn-primary" style={{width:"180px",marginTop:"10px",textAlign:"center"}}><a href="https://satisfactiondrivers.com/contact-us" target='_blank'>Premium Support</a></button>
           </div>
         </div>
       </div>)}
