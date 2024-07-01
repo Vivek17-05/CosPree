@@ -349,7 +349,7 @@ const Player = () => {
             Video URL:
             <input
               type="text"
-              value={url}
+              value={((url===defaultUrl) || (url===defUrl)) ? "" : url}
               onChange={handleUrlChange}
             />
           </label>
@@ -388,7 +388,7 @@ const Player = () => {
               Video URL:
               <input
                 type="text"
-                value={url}
+                value={((url===defaultUrl) || (url===defUrl)) ? "" : url}
                 onChange={handleUrlChange}
                 style={{ marginLeft: "10px" }}
               />
