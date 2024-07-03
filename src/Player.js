@@ -11,7 +11,7 @@ const Player = () => {
   // }) ;
   // const callback = res => console.log(res) ;
   // monday.listen(['settings'],callback) ;
-  const defaultUrl = 'https://www.loom.com/share/e00c8856f48049519ca6bece165b449a?sid=92f34792-4d9f-4946-96ed-1d20280abc4c';
+  const defaultUrl = 'https://www.loom.com/share/41f37898926845b797fca215f04ce57c?sid=a2748109-4a75-406b-94bb-0e6d7ad47a73';
   const id = defaultUrl.match(/(?:loom\.com\/share\/|loom\.com\/embed\/)([a-zA-Z0-9]+)/)[1];
   const defUrl = `https://www.loom.com/embed/${id}?autoplay=false`;
   // const [urlSetting, setUrlSetting] = useState(false);
